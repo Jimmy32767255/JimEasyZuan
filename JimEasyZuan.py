@@ -14,7 +14,12 @@ RANDOM_TEXTS = [
     "eyes eyes baby to go ten...",
     "本程序由PyWebView强势驱动！",
     "也叫JimJiaHaoKit（Jim嘉豪套件）",
-    "依旧生化倒计时"
+    "依旧生化倒计时",
+    "使用黑客模式前请先确认周围没有任何懂计算机的人，以防被拆穿",
+    "装B失败概不负责！",
+    "还是音量条DJ大蛇",
+    "还是扫盘大佬",
+    "已消耗一次免费观看次数"
 ]
 
 # 随机按钮文本
@@ -25,7 +30,7 @@ BUTTON_TEXTS = [
     "冻结时间",
     "释放洪荒之力",
     "成为全场最靓的仔",
-    "帅翻全场"
+    "一键帅翻全场"
 ]
 
 # 当前选定的文本
@@ -143,8 +148,8 @@ def create_html():
         .subtitle {{
             font-size: 1.2em;
             color: #ccc;
-            margin-bottom: 30px;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            margin: auto 0;
         }}
         
         .btn {{
@@ -161,6 +166,7 @@ def create_html():
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-top: auto;
         }}
         
         .btn:hover {{
@@ -199,6 +205,10 @@ def create_html():
         
         #main-screen {{
             display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding: 50px 0;
         }}
         
         .volume-slider-container {{
