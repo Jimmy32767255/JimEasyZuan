@@ -1,15 +1,20 @@
 import webview
 import random
 import os
+import sys
 import subprocess
 import threading
-import sys
+import base64
 
 # 随机小字内容
 RANDOM_TEXTS = [
-    "感谢Microsoft Edge WebView2让我们能得以避免一台电脑上有好几百个浏览器这种事，是时候停用Electron框架了！",
-    "畏惧神是正常的，因为神也会自畏",
-    "eyes eyes baby to go ten..."
+    "感谢Microsoft Edge WebView2让我们能得以避免一台电脑上有好几百个浏览器这种事",
+    "是时候停用Electron框架了！",
+    "\"畏惧神是正常的，因为神也会自畏。\"——不知道谁说的",
+    "eyes eyes baby to go ten...",
+    "本程序由PyWebView强势驱动！",
+    "也叫JimJiaHaoKit（Jim嘉豪套件）",
+    "依旧生化倒计时"
 ]
 
 # 随机按钮文本
@@ -18,7 +23,9 @@ BUTTON_TEXTS = [
     "high翻全场",
     "成为嘉豪",
     "冻结时间",
-    "释放洪荒之力"
+    "释放洪荒之力",
+    "成为全场最靓的仔",
+    "帅翻全场"
 ]
 
 # 当前选定的文本
@@ -47,8 +54,8 @@ class Api:
         threading.Thread(target=open_cmd_windows, daemon=True).start()
         
     def dj_mode(self):
-        # 切换到DJ界面
-        self.window.evaluate_js("showDJMode()")
+        # DJ模式：直接播放音乐
+        self.play_music()
         
     def play_music(self):
         # 使用系统默认播放器打开音乐文件
@@ -65,13 +72,21 @@ class Api:
     def go_back(self):
         # 返回主界面
         self.window.evaluate_js("showMainScreen()")
+        
+    def exit_app(self):
+        # 退出应用
+        import sys
+        sys.exit(0)
 
 def create_html():
     # 创建HTML内容
-    # 生成正确的文件URL路径
+    # 读取图片文件并转换为base64
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    bg_path = os.path.join(script_dir, "bg.avif").replace("\\", "/")
-    bg_url = f"file:///{bg_path}"
+    bg_path = os.path.join(script_dir, "bg.png")
+    
+    # 读取图片文件并编码为base64
+    with open(bg_path, 'rb') as img_file:
+        bg_base64 = base64.b64encode(img_file.read()).decode('utf-8')
     
     # 生成音频文件路径
     audio_path = os.path.join(script_dir, "Friendships(Plain_Jane).wav").replace("\\", "/")
@@ -88,7 +103,7 @@ def create_html():
             margin: 0;
             padding: 0;
             font-family: 'Microsoft YaHei', sans-serif;
-            background: url('{bg_url}') no-repeat center center fixed;
+            background: url('data:image/png;base64,{bg_base64}') no-repeat center center fixed;
             background-size: cover;
             color: white;
             height: 100vh;
@@ -167,6 +182,15 @@ def create_html():
             position: absolute;
             top: 20px;
             left: 20px;
+        }}
+        
+        .exit-btn {{
+            background: linear-gradient(45deg, #ff0000, #ff6b6b);
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
         }}
         
         .screen {{
@@ -258,6 +282,7 @@ def create_html():
 </head>
 <body>
     <div id="main-screen" class="screen">
+        <button class="btn exit-btn" onclick="exitApp()">退出</button>
         <h1>JimEasyZuan</h1>
         <div class="subtitle" id="random-text">{current_text}</div>
         <button class="btn" onclick="startApp()" id="start-btn">{current_button_text}</button>
@@ -346,6 +371,11 @@ def create_html():
             pywebview.api.go_back();
         }}
         
+        // 退出应用
+        function exitApp() {{
+            pywebview.api.exit_app();
+        }}
+        
         // 初始化
         window.addEventListener('DOMContentLoaded', function() {{
             createParticles();
@@ -355,31 +385,7 @@ def create_html():
 </html>
 '''
 
-def check_webview2():
-    """检查WebView2运行时是否安装"""
-    try:
-        if sys.platform == 'win32':
-            # 检查WebView2运行时是否可用
-            try:
-                import webview
-                webview.initialize()
-                return True
-            except Exception as e:
-                print(f"WebView2初始化失败: {e}")
-                print("请安装Microsoft Edge WebView2运行时")
-                print("下载地址: https://developer.microsoft.com/en-us/microsoft-edge/webview2/")
-                return False
-        return True
-    except Exception as e:
-        print(f"检查WebView2时出错: {e}")
-        return True
-
-def main():
-    # 检查WebView2运行时
-    if not check_webview2():
-        input("按回车键退出...")
-        return
-    
+if __name__ == '__main__':
     api = Api()
     window = webview.create_window(
         'JimEasyZuan',
@@ -389,10 +395,10 @@ def main():
         height=720,
         resizable=False,
         frameless=True,
-        text_select=True  # 允许文本选择，有助于音频播放
+        text_select=False
     )
     api.set_window(window)
-    webview.start()
-
-if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == "--debug":
+        webview.start(debug=True)
+    else:
+        webview.start()
