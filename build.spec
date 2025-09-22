@@ -10,7 +10,7 @@ a = Analysis(
         ('bg.png', '.'),
         ('Friendships(Plain_Jane).wav', '.')
     ],
-    hiddenimports=['pywebview'],
+    hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],

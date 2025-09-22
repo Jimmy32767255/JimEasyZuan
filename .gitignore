@@ -2,3 +2,5 @@ build
 dist
 absolute
 .git
+uninstall_list.txt
+build.log

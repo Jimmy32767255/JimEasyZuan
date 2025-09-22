@@ -25,24 +25,39 @@ JimEasyZuan 是一个集黑客模式与DJ模式于一身的终极装B神器！�
 - Windows系统
 - Python 3.6+
 
-### 快速开始
-```bash
-# 克隆项目
-git clone https://github.com/Jimmy32767255/JimEasyZuan.git
+### 快速开始(解释执行)
 
-# 进入目录
-cd JimEasyZuan
+#### 克隆项目
+`git clone https://github.com/Jimmy32767255/JimEasyZuan.git`
 
-# 安装依赖
-pip install -r requirements.txt
+#### 进入目录
+`cd JimEasyZuan`
 
-# 开始装B！
-python JimEasyZuan.py
-```
+#### 安装依赖
+`pip install -r requirements.txt`
 
-或者直接双击 `Start.bat`，简单粗暴！
+#### 开始装B！
+`python JimEasyZuan.py`
 
-*--debug参数可以开启调试模式*
+或者直接执行 `Start.bat`，简单粗暴！
+
+### 快速开始(打包后版本)
+
+#### 下载打包后的版本
+
+你可以从 [Release 页面](https://github.com/Jimmy32767255/JimEasyZuan/releases) 下载最新的打包版本。
+
+#### 运行打包后的版本
+
+直接执行 `JimEasyZuan.exe` 即可。
+
+### 命令行参数
+
+`--debug`参数可以开启调试模式
+
+### 从源代码构建
+
+直接执行 `build.bat` 即可。
 
 ## 使用指南 🎮
 
