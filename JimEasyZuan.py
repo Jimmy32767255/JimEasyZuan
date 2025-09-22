@@ -19,7 +19,8 @@ RANDOM_TEXTS = [
     "装B失败概不负责！",
     "还是音量条DJ大蛇",
     "还是扫盘大佬",
-    "已消耗一次免费观看次数"
+    "已消耗一次免费观看次数",
+    "嘉豪之风正从我的背后吹来"
 ]
 
 # 随机按钮文本
@@ -410,5 +411,8 @@ if __name__ == '__main__':
     api.set_window(window)
     if len(sys.argv) > 1 and sys.argv[1] == "--debug":
         webview.start(debug=True)
+    elif len(sys.argv) > 1 and sys.argv[1] == "--please-dont-crash":
+        print("诶🤓👆我就不😎气死你气死你😜😜😜😈😈😈")
+        sys.exit(1)
     else:
         webview.start()
